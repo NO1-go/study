@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<div id="app">
+<h1 id="title"></h1>
+<ul id="foodslist">
+</ul>
+</div>
+<script>
+    const title=document.getElementById('title');
+    const foodsList=document.getElementById('foodslist');
+    const dataJson='{"title": "零食清单", "foods": [{ "id": 1, "name": "原味鱿鱼丝", "image": "原味鱿鱼丝.png", "purchased": false }, { "id": 2, "name": "辣味鱿鱼丝", "image": "辣味鱿鱼丝.png", "purchased": false }, { "id": 3, "name": "炭烧味鱿鱼丝", "image": "炭烧味鱿鱼丝.png", "purchased": false }]}'
+    const data=JSON.parse(dataJson);
+    title.innerHTML=data.title;
+    function getFoodMessage(){
+        let foodsArray = data.foods;
+        foodsArray.forEach(foods=> {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <img src="${foods.image}" alt="美食图片">
+                <span>${foods.name}</span>
+                <input class="change" type="checkbox"  value="${foods.purchased}">
+                <span class="purchas">${foods.purchased}</span>
+            `
+            foodsList.appendChild(li);
+            }
+        )
+    }
+    getFoodMessage();
+    const change=document.querySelectorAll('.change');
+    change.forEach((itemChange)=>{
+            itemChange.addEventListener('click',()=>{
+                const purchase=(itemChange.parentElement.childNodes[7]);
+                itemChange.value=itemChange.checked===true;
+                purchase.innerHTML=itemChange.value;
+            })
+    })
+
+</script>
+</body>
+</html>
